@@ -115,12 +115,19 @@
         ]
       }
     ],
-    "selector-type-case": "lower",
+    "selector-type-case": [
+      "lower",
+      {
+        "ignoreTypes": [
+          "/[a-zA-Z]+/"
+        ]
+      }
+    ],
     "selector-type-no-unknown": [
       true,
       {
-        "ignore": [
-          "custom-elements"
+        "ignoreTypes": [
+          "/[a-zA-Z]+/"
         ]
       }
     ],
