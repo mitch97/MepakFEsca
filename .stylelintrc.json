@@ -79,7 +79,11 @@
       true,
       {
         "ignoreProperties": [
-          "composes"
+          "composes",
+          "padding-horizontal",
+          "padding-vertical",
+          "margin-horizontal",
+          "margin-vertical"
         ]
       }
     ],
