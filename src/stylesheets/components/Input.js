@@ -15,7 +15,7 @@ export default StyleSheet.create({
   },
   iconWrapper: {
     height: '100%',
-    flex: 1,
+    display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     position: 'absolute',

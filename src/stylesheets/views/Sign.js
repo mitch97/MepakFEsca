@@ -3,7 +3,8 @@ import { Constants } from '../constant';
 
 export default StyleSheet.create({
   wrapper: {
-    flex: 1,
+    height: '100%',
+    display: 'flex',
     justifyContent: 'center',
     alignContent: 'center',
     paddingHorizontal: 20,

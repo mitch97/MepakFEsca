@@ -1,6 +1,9 @@
 const headers = {
   Accept: 'application/json',
   'Content-Type': 'application/json',
+  'X-App-Authorization': 'c7KxDmBaQLa6LgBnD7hPwcKXaTo7DWbK',
+  'Accept-Language': 'it',
+  'X-Accept-Currency': 'EUR',
 };
 
 const get = async (url, customHeaders = {}) => {
@@ -30,3 +33,5 @@ const put = async (url, body, customHeaders = {}) => {
 };
 
 export default { get, post, put };
+
+export * from './constant';

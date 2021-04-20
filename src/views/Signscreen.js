@@ -1,5 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { View } from 'react-native';
+import useAuth from '../hooks/useAuth';
 import styles from '../stylesheets/views/Sign';
 
 import { Input, Button } from '../components';
@@ -7,15 +8,19 @@ import { Input, Button } from '../components';
 import AuthContext from '../context/AuthContext';
 
 const Signscreen = ({ navigation }) => {
-  const { signIn } = useContext(AuthContext);
+  const { signIn } = useAuth();
+  const { setUserToken } = useContext(AuthContext);
   const [username, setUsername] = useState();
   const [password, setPassword] = useState();
 
   const handleUsername = value => setUsername(value);
   const handlePassword = value => setPassword(value);
   const handleSubmit = async () => {
-    const { response } = await signIn({ username, password });
-    if (response) navigation.navigate('Home');
+    const { response, token } = await signIn({ username, password });
+    if (response) {
+      setUserToken(token);
+      navigation.navigate('Category');
+    }
   };
 
   return (
