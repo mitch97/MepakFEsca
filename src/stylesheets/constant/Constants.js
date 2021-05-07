@@ -8,5 +8,9 @@ const Constants = {
   INPUT_COLOR: '#464f5a',
   BUTTON_BACKGROUND: '#6e62e4',
   BUTTON_COLOR: '#ffffff',
+  NUMBER_PICKER_LABEL_COLOR: '#464f5a',
+  NUMBER_PICKER_SELECTOR: '#b7bfc9',
+  SEPARATOR_COLOR: '#b7bfc9',
+  MODAL_BACKGROUND: '#00000080',
 };
 export default Constants;

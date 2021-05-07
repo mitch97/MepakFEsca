@@ -16,9 +16,8 @@ const Card = ({
     <Pressable
       onPress={onClick}
       style={({ pressed }) => ({
-        ...(pressed
-          ? styles.cardPressablePressed
-          : styles.cardPressableDefault),
+        ...styles.cardPressableDefault,
+        ...(pressed && styles.cardPressablePressed),
         ...customStyle,
       })}>
       <View style={styles.cardWrapper}>

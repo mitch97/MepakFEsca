@@ -2,6 +2,8 @@ import 'react-native-gesture-handler';
 import React, { useEffect, useState } from 'react';
 import { Platform, StatusBar } from 'react-native';
 import useAuth from './src/hooks/useAuth';
+
+import styles from './src/stylesheets/App';
 import theme from './src/stylesheets/theme';
 
 import Api, { BASE_URL, CONFIG_PATH } from './src/api';
@@ -11,11 +13,16 @@ import Store from './src/store';
 import SplashScreenManager from 'react-native-splash-screen';
 import { NavigationContainer } from '@react-navigation/native';
 import RouterManager from './src/router/RouterManager';
+
 import AuthContext from './src/context/AuthContext';
+import OrderContext from './src/context/OrderContext';
 
 const App = () => {
   const [isLoading, setLoading] = useState(true);
   const [userToken, setUserToken] = useState();
+  const [order, setOrder] = useState({});
+
+  // console.log('--order--', order);
 
   useEffect(() => {
     SplashScreenManager.hide();
@@ -52,13 +59,25 @@ const App = () => {
     effect();
   }, []);
 
+  const addProductToOrder = _order =>
+    setOrder(__order => ({ ...__order, [_order._id]: _order }));
+  const removeProductToOrder = _id => {
+    setOrder(__order => {
+      delete __order[_id];
+      return { ...__order };
+    });
+  };
+
   return (
-    <AuthContext.Provider value={{ userToken, setUserToken }}>
-      <NavigationContainer theme={theme}>
-        {Platform.OS === 'ios' && <StatusBar barStyle="dark-content" />}
-        {!isLoading && <RouterManager />}
-      </NavigationContainer>
-    </AuthContext.Provider>
+    <OrderContext.Provider
+      value={{ order, addProductToOrder, removeProductToOrder, setOrder }}>
+      <AuthContext.Provider value={{ userToken, setUserToken }}>
+        <NavigationContainer theme={theme}>
+          {Platform.OS === 'ios' && <StatusBar barStyle="dark-content" />}
+          {!isLoading && <RouterManager />}
+        </NavigationContainer>
+      </AuthContext.Provider>
+    </OrderContext.Provider>
   );
 };
 

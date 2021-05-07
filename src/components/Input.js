@@ -12,14 +12,19 @@ const Input = ({
   font = Fonts.FONT_REGULAR,
   onChange = () => {},
   style: customStyle,
+  inputStyle = {},
+  multiline = false,
+  numberOfLines,
 }) => {
   const otherProps = {
     secureTextEntry: type === 'password',
+    multiline,
+    numberOfLines: multiline ? numberOfLines : undefined,
   };
   return (
     <View style={{ ...styles.wrapper, ...customStyle }}>
       <TextInput
-        style={{ ...styles.input, ...font }}
+        style={{ ...styles.input, ...font, ...inputStyle }}
         value={value}
         placeholder={placeholder}
         placeholderTextColor={Constants.INPUT_PLACEHOLDER_COLOR}

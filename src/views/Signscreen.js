@@ -13,9 +13,9 @@ const Signscreen = ({ navigation }) => {
   const [username, setUsername] = useState();
   const [password, setPassword] = useState();
 
-  const handleUsername = value => setUsername(value);
-  const handlePassword = value => setPassword(value);
-  const handleSubmit = async () => {
+  const onChangeUsername = value => setUsername(value);
+  const onChangePassword = value => setPassword(value);
+  const onSubmit = async () => {
     const { response, token } = await signIn({ username, password });
     if (response) {
       setUserToken(token);
@@ -32,17 +32,17 @@ const Signscreen = ({ navigation }) => {
             style={styles.username}
             placeholder="Inserisci la username"
             type="email-address"
-            onChange={handleUsername}
+            onChange={onChangeUsername}
           />
           <Input
             icon="password"
             placeholder="Inserisci la password"
             type="password"
-            onChange={handlePassword}
+            onChange={onChangePassword}
           />
         </View>
         <View style={styles.submitWrapper}>
-          <Button style={styles.submit} onClick={handleSubmit} />
+          <Button style={styles.submit} onClick={onSubmit} />
         </View>
       </View>
     </View>

@@ -1,10 +1,11 @@
 import React from 'react';
 import { View, Text, Pressable } from 'react-native';
 import { Fonts } from '../stylesheets/constant';
-import styles from '../stylesheets/components/Button';
+import styles from '../stylesheets/components/ButtonSelectable';
 
-const Button = ({
+const ButtonSelectable = ({
   value = 'Click me',
+  select = false,
   font = Fonts.FONT_SEMIBOLD,
   onClick = () => {},
   style: customStyle,
@@ -15,9 +16,16 @@ const Button = ({
       style={({ pressed }) => ({
         ...styles.buttonPressableDefault,
         ...(pressed && styles.buttonPressablePressed),
+        ...(select && styles.buttonPressableSelect),
+        ...customStyle,
       })}>
       <View style={styles.buttonWrapper}>
-        <Text style={{ ...styles.button, ...font, ...customStyle }}>
+        <Text
+          style={{
+            ...styles.button,
+            ...font,
+            ...(select && styles.buttonSelect),
+          }}>
           {value}
         </Text>
       </View>
@@ -25,4 +33,4 @@ const Button = ({
   );
 };
 
-export default Button;
+export default ButtonSelectable;

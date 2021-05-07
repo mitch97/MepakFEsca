@@ -5,7 +5,7 @@ import { Card } from '../components';
 
 import Api, { BASE_URL, API_PATH, CATEGORIES_PATH } from '../api';
 
-const Categoryscreen = () => {
+const Categoryscreen = ({ navigation }) => {
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
@@ -18,14 +18,22 @@ const Categoryscreen = () => {
     effect();
   }, []);
 
+  const onSelectCategory = category =>
+    navigation.navigate('Product', { category });
+
   return (
     <ScrollView
       contentContainerStyle={styles.scrollview}
       alwaysBounceVertical={false}>
       <View style={styles.wrapper}>
-        {categories.map(({ _id, name, icon, products }) => (
+        {categories.map(({ _id, guid, name, icon, products }) => (
           <View style={styles.cardWrapper} key={_id}>
-            <Card icon={icon} title={name} subtitle={`${products} prodotti`} />
+            <Card
+              icon={icon}
+              title={name}
+              subtitle={`${products} prodotti`}
+              onClick={() => onSelectCategory(guid)}
+            />
           </View>
         ))}
       </View>

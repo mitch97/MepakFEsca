@@ -11,11 +11,7 @@ export default StyleSheet.create({
     borderRadius: 20,
   },
   cardPressablePressed: {
-    width,
-    height,
-    backgroundColor: Constants.CARD_BACKGROUND,
     opacity: 0.7,
-    borderRadius: 20,
   },
   cardWrapper: {
     flex: 1,

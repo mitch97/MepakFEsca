@@ -13,7 +13,7 @@
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		23CF1CE8C4DA10CE87B653E0 /* libPods-gestione_comande_app.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D1743E601A2F76300E1239E5 /* libPods-gestione_comande_app.a */; };
-		2EC40FA4262ED4C60085C731 /* icomoon.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2EC40FA3262ED4C60085C731 /* icomoon.ttf */; };
+		2E664BCF263EF61800C0D692 /* icomoon.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2E664BCE263EF61800C0D692 /* icomoon.ttf */; };
 		2EC40FAA262EDB430085C731 /* Quicksand-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2EC40FA7262EDB430085C731 /* Quicksand-Medium.ttf */; };
 		2EC40FAB262EDB430085C731 /* Quicksand-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2EC40FA8262EDB430085C731 /* Quicksand-Light.ttf */; };
 		2EC40FAC262EDB430085C731 /* Quicksand-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2EC40FA9262EDB430085C731 /* Quicksand-Regular.ttf */; };
@@ -42,7 +42,7 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = gestione_comande_app/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = gestione_comande_app/main.m; sourceTree = "<group>"; };
 		16D912DFF6AA2D5774984E1A /* Pods-gestione_comande_app.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-gestione_comande_app.debug.xcconfig"; path = "Target Support Files/Pods-gestione_comande_app/Pods-gestione_comande_app.debug.xcconfig"; sourceTree = "<group>"; };
-		2EC40FA3262ED4C60085C731 /* icomoon.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = icomoon.ttf; sourceTree = "<group>"; };
+		2E664BCE263EF61800C0D692 /* icomoon.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = icomoon.ttf; sourceTree = "<group>"; };
 		2EC40FA7262EDB430085C731 /* Quicksand-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Quicksand-Medium.ttf"; sourceTree = "<group>"; };
 		2EC40FA8262EDB430085C731 /* Quicksand-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Quicksand-Light.ttf"; sourceTree = "<group>"; };
 		2EC40FA9262EDB430085C731 /* Quicksand-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Quicksand-Regular.ttf"; sourceTree = "<group>"; };
@@ -120,11 +120,11 @@
 		2EC40FA2262ED4AA0085C731 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
+				2E664BCE263EF61800C0D692 /* icomoon.ttf */,
 				2EC40FE4262EE3EC0085C731 /* Quicksand-SemiBold.ttf */,
 				2EC40FA8262EDB430085C731 /* Quicksand-Light.ttf */,
 				2EC40FA7262EDB430085C731 /* Quicksand-Medium.ttf */,
 				2EC40FA9262EDB430085C731 /* Quicksand-Regular.ttf */,
-				2EC40FA3262ED4C60085C731 /* icomoon.ttf */,
 			);
 			path = Fonts;
 			sourceTree = "<group>";
@@ -265,7 +265,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2EC40FA4262ED4C60085C731 /* icomoon.ttf in Resources */,
+				2E664BCF263EF61800C0D692 /* icomoon.ttf in Resources */,
 				2EC40FAC262EDB430085C731 /* Quicksand-Regular.ttf in Resources */,
 				2EC40FAA262EDB430085C731 /* Quicksand-Medium.ttf in Resources */,
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
