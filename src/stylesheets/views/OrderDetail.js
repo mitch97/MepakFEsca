@@ -26,4 +26,19 @@ export default StyleSheet.create({
     paddingVertical: 20,
     ...Shadows.MODAL,
   },
+  modalNumberPicker: {
+    marginBottom: 20,
+  },
+  modalExtraWrapper: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 40,
+  },
+  modalSegue: {
+    width: '45%',
+  },
+  modalAddNotes: {
+    width: '45%',
+  },
 });

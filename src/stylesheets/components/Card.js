@@ -27,4 +27,7 @@ export default StyleSheet.create({
   title: {
     fontSize: 20,
   },
+  status: {
+    marginTop: 20,
+  },
 });

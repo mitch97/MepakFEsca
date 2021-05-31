@@ -16,11 +16,14 @@ import RouterManager from './src/router/RouterManager';
 
 import AuthContext from './src/context/AuthContext';
 import OrderContext from './src/context/OrderContext';
+import NavigationContext from './src/context/NavigationContext';
 
 const App = () => {
   const [isLoading, setLoading] = useState(true);
   const [userToken, setUserToken] = useState();
   const [order, setOrder] = useState({});
+  const [table, setTable] = useState();
+  const [navigationConstant, setNavigationConstant] = useState();
 
   // console.log('--order--', order);
 
@@ -67,17 +70,32 @@ const App = () => {
       return { ...__order };
     });
   };
+  const flush = () => {
+    setOrder({});
+    setTable(undefined);
+  };
 
   return (
-    <OrderContext.Provider
-      value={{ order, addProductToOrder, removeProductToOrder, setOrder }}>
-      <AuthContext.Provider value={{ userToken, setUserToken }}>
-        <NavigationContainer theme={theme}>
-          {Platform.OS === 'ios' && <StatusBar barStyle="dark-content" />}
-          {!isLoading && <RouterManager />}
-        </NavigationContainer>
-      </AuthContext.Provider>
-    </OrderContext.Provider>
+    <NavigationContext.Provider
+      value={{ navigationConstant, setNavigationConstant }}>
+      <OrderContext.Provider
+        value={{
+          order,
+          addProductToOrder,
+          removeProductToOrder,
+          setOrder,
+          table,
+          setTable,
+          flush,
+        }}>
+        <AuthContext.Provider value={{ userToken, setUserToken }}>
+          <NavigationContainer theme={theme}>
+            {Platform.OS === 'ios' && <StatusBar barStyle="dark-content" />}
+            {!isLoading && <RouterManager />}
+          </NavigationContainer>
+        </AuthContext.Provider>
+      </OrderContext.Provider>
+    </NavigationContext.Provider>
   );
 };
 

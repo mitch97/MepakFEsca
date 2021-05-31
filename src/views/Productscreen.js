@@ -3,6 +3,7 @@ import { FlatList } from 'react-native';
 import { ProductRow, Separator } from '../components';
 
 import OrderContext from '../context/OrderContext';
+import NavigationContext, { Constants } from '../context/NavigationContext';
 
 import Api, { BASE_URL, API_PATH, PRODUCTS_BY_CATEGORY_PATH } from '../api';
 
@@ -18,7 +19,21 @@ const Productscreen = ({
     removeProductToOrder,
     setOrder,
   } = useContext(OrderContext);
+  const { navigationConstant, setNavigationConstant } = useContext(
+    NavigationContext,
+  );
   const [products, setProducts] = useState([]);
+
+  // useEffect(() => {
+  //   console.log('--navigation.back, Productscreen--', navigationConstant);
+  //   switch (navigationConstant) {
+  //     case Constants.RETURN_TO_HOME:
+  //       navigation.goBack();
+  //       break;
+  //     default:
+  //       break;
+  //   }
+  // }, [navigation, navigationConstant]);
 
   useEffect(() => {
     const effect = async () => {
@@ -43,7 +58,7 @@ const Productscreen = ({
           onChangeQuantityProduct({ key: _id, sign })
         }
         onAddSegue={() => onSegue({ key: _id })}
-        onAddNote={() => navigation.push('Note', { product: _id })}
+        onAddNote={() => navigation.navigate('Note', { product: _id })}
       />
     );
   };

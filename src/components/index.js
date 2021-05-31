@@ -6,10 +6,12 @@ import ButtonSelectable from './ButtonSelectable';
 import NumberPicker from './NumberPicker';
 import Label from './Label';
 import Icon from './Icon';
-import Card from './Card';
+import { Product as ProductCard, Table as TableCard } from './Card';
 import {
   Product as ProductRow,
   Order as OrderDetailRow,
+  OrderGrouped as OrderGroupedRow,
+  TotalOrder as TotalOrderRow,
   Separator,
   Section,
 } from './Row';
@@ -23,9 +25,12 @@ export {
   NumberPicker,
   Label,
   Icon,
-  Card,
+  ProductCard,
+  TableCard,
   ProductRow,
   OrderDetailRow,
+  OrderGroupedRow,
+  TotalOrderRow,
   Separator,
   Section,
 };

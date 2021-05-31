@@ -29,6 +29,8 @@ export default StyleSheet.create({
   rowProductPrice: {
     fontSize: 20,
     maxWidth: '25%',
+    marginTop: 10,
+    marginBottom: 20,
   },
   rowProductSubtitle: {
     fontSize: 12,
@@ -37,7 +39,7 @@ export default StyleSheet.create({
     marginVertical: 20,
   },
   rowProductSelectWrapper: {
-    marginTop: 20,
+    marginVertical: 20,
   },
   rowProductExtraWrapper: {
     display: 'flex',
@@ -85,6 +87,73 @@ export default StyleSheet.create({
   orderDetailNotes: {
     fontSize: 12,
     marginTop: 10,
+  },
+  orderGroupedContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    alignItems: 'flex-start',
+    backgroundColor: Constants.CARD_BACKGROUND,
+    paddingHorizontal: 20,
+    paddingVertical: 30,
+    marginVertical: 20,
+  },
+  orderGroupedWrapper: {
+    marginVertical: 20,
+  },
+  orderGroupedInfoWrapper: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'baseline',
+  },
+  orderGroupedStatus: {
+    fontSize: 25,
+  },
+  orderGroupedTitle: {
+    fontSize: 20,
+  },
+  orderGroupedQuantity: {
+    fontSize: 25,
+  },
+  orderGroupedTitleSmall: {
+    fontSize: 15,
+  },
+  orderGroupedQuantitySmall: {
+    fontSize: 20,
+  },
+  orderGroupedChooseWrapper: {
+    width: '100%',
+    marginTop: 30,
+  },
+  totalOrderContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    alignItems: 'flex-start',
+    backgroundColor: Constants.CARD_BACKGROUND,
+    paddingHorizontal: 20,
+    paddingVertical: 30,
+    marginVertical: 20,
+  },
+  totalOrderTable: {
+    fontSize: 25,
+  },
+  totalOrderInfoWrapper: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'baseline',
+  },
+  totalOrderStatus: {
+    fontSize: 20,
+    marginTop: 20,
+  },
+  totalOrderTitle: {
+    fontSize: 15,
+  },
+  totalOrderQuantity: {
+    fontSize: 20,
   },
   separator: {
     width: '100%',

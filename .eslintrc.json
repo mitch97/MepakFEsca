@@ -16,7 +16,10 @@
     "template-curly-spacing": "off",
     "indent": [
       "error",
-      2
+      2,
+      {
+        "SwitchCase": 1
+      }
     ],
     "max-classes-per-file": "off",
     "no-underscore-dangle": "off",

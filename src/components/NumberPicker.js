@@ -16,8 +16,8 @@ const NumberPicker = ({
         ...styles.quantitySelectorPressableDefault,
         ...(pressed && styles.quantitySelectorPressablePressed),
         ...(sign === '+'
-          ? styles.quantitySelectorPressableLeft
-          : styles.quantitySelectorPressableRight),
+          ? styles.quantitySelectorPressableRight
+          : styles.quantitySelectorPressableLeft),
       })}>
       <View style={styles.quantitySelectorWrapper}>
         <Text style={{ ...styles.quantitySelectorLabel, ...font }}>{sign}</Text>
@@ -26,13 +26,13 @@ const NumberPicker = ({
   );
   return (
     <View style={{ ...styles.numberPickerWrapper, ...customStyle }}>
-      {quantitySelector('+')}
+      {quantitySelector('-')}
       <View style={styles.numberPickerQuantityWrapper}>
         <Text style={{ ...styles.quantitySelectorLabel, ...font }}>
           {initial}
         </Text>
       </View>
-      {quantitySelector('-')}
+      {quantitySelector('+')}
     </View>
   );
 };

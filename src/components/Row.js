@@ -1,6 +1,17 @@
 import React from 'react';
 import { View, Pressable } from 'react-native';
-import { Label, ButtonSelectable, NumberPicker, Icon } from '../components';
+import {
+  Label,
+  Button,
+  ButtonSelectable,
+  NumberPicker,
+  Icon,
+} from '../components';
+import {
+  statusToButton,
+  statusToString,
+  backgroundForStatus,
+} from '../utils/OrderStatus';
 import { Fonts, Constants } from '../stylesheets/constant';
 import styles from '../stylesheets/components/Row';
 
@@ -16,23 +27,17 @@ const Product = ({
   onAddNote = () => {},
 }) => (
   <View style={styles.rowProductWrapper}>
-    <View style={styles.rowProductInfoWrapper}>
-      <Label font={Fonts.FONT_SEMIBOLD} style={styles.rowProductTitle}>
-        {title}
+    {/* <View style={styles.rowProductInfoWrapper}> */}
+    <Label font={Fonts.FONT_SEMIBOLD} style={styles.rowProductTitle}>
+      {title}
+    </Label>
+    {price && (
+      <Label font={Fonts.FONT_SEMIBOLD} style={styles.rowProductPrice}>
+        {`${price.currency} ${price.value}`}
       </Label>
-      {price && (
-        <Label font={Fonts.FONT_SEMIBOLD} style={styles.rowProductPrice}>
-          {`${price.currency} ${price.value}`}
-        </Label>
-      )}
-    </View>
+    )}
+    {/* </View> */}
     <Label style={styles.rowProductSubtitle}>{subtitle}</Label>
-    <ButtonSelectable
-      style={styles.rowProductSelect}
-      select={quantity > 0}
-      value="Seleziona"
-      onClick={onSelect}
-    />
     {quantity > 0 && (
       <View style={styles.rowProductSelectWrapper}>
         <NumberPicker initial={quantity} onChange={onChangeQuantity} />
@@ -51,10 +56,22 @@ const Product = ({
         </View>
       </View>
     )}
+    <ButtonSelectable
+      style={styles.rowProductSelect}
+      select={quantity > 0}
+      value="Seleziona"
+      onClick={onSelect}
+    />
   </View>
 );
 
-const Order = ({ title, quantity, notes, onClick = () => {} }) => (
+const Order = ({
+  title,
+  quantity,
+  notes,
+  onClick = () => {},
+  editable = true,
+}) => (
   <Pressable
     onPress={onClick}
     style={({ pressed }) => ({
@@ -73,14 +90,87 @@ const Order = ({ title, quantity, notes, onClick = () => {} }) => (
         </View>
         {notes && <Label style={styles.orderDetailNotes}>{notes}</Label>}
       </View>
-      <Icon
-        style={styles.orderDetailMore}
-        name={'back'}
-        size={Constants.ICON_SIZE_SMALL}
-        color={Constants.INPUT_PLACEHOLDER_COLOR}
-      />
+      {editable && (
+        <Icon
+          style={styles.orderDetailMore}
+          name={'back'}
+          size={Constants.ICON_SIZE_SMALL}
+          color={Constants.INPUT_PLACEHOLDER_COLOR}
+        />
+      )}
     </View>
   </Pressable>
+);
+
+const OrderGrouped = ({ status, datas, onClick = () => {} }) => (
+  <View
+    style={{
+      ...styles.orderGroupedContainer,
+      /* stylelint-disable function-name-case */
+      backgroundColor: backgroundForStatus(status),
+    }}>
+    {statusToString(status, 'kitchen') && (
+      <Label font={Fonts.FONT_SEMIBOLD} style={styles.orderGroupedStatus}>
+        {statusToString(status, 'kitchen')}
+      </Label>
+    )}
+    {datas.map(({ _id, quantity, name, orders }) => (
+      <View style={styles.orderGroupedWrapper} key={_id}>
+        <View style={styles.orderGroupedInfoWrapper}>
+          <Label font={Fonts.FONT_SEMIBOLD} style={styles.orderGroupedQuantity}>
+            {`${quantity}x `}
+          </Label>
+          <Label font={Fonts.FONT_REGULAR} style={styles.orderGroupedTitle}>
+            {name}
+          </Label>
+        </View>
+        {orders.map(
+          ({ _id: orderId, product: { quantity: foodQuantity }, table }) => (
+            <View style={styles.orderGroupedInfoWrapper} key={orderId}>
+              <Label
+                font={Fonts.FONT_SEMIBOLD}
+                style={styles.orderGroupedQuantitySmall}>
+                {`${foodQuantity}x `}
+              </Label>
+              <Label
+                font={Fonts.FONT_REGULAR}
+                style={styles.orderGroupedTitleSmall}>
+                {`Tavolo #${table}`}
+              </Label>
+            </View>
+          ),
+        )}
+      </View>
+    ))}
+    {statusToButton(status) && (
+      <View style={styles.orderGroupedChooseWrapper}>
+        <Button value={statusToButton(status)} onClick={onClick} />
+      </View>
+    )}
+  </View>
+);
+
+const TotalOrder = ({ table, food, status }) => (
+  <View style={styles.totalOrderContainer}>
+    <Label font={Fonts.FONT_SEMIBOLD} style={styles.totalOrderTable}>
+      {`Tavolo #${table}`}
+    </Label>
+    {food.map(({ _id, quantity, name }) => (
+      <View style={styles.totalOrderInfoWrapper} key={_id}>
+        <Label font={Fonts.FONT_SEMIBOLD} style={styles.totalOrderQuantity}>
+          {`${quantity}x `}
+        </Label>
+        <Label font={Fonts.FONT_REGULAR} style={styles.totalOrderTitle}>
+          {name}
+        </Label>
+      </View>
+    ))}
+    {statusToString(status, 'kitchen') && (
+      <Label font={Fonts.FONT_SEMIBOLD} style={styles.totalOrderStatus}>
+        {statusToString(status, 'kitchen')}
+      </Label>
+    )}
+  </View>
 );
 
 const Section = ({ title }) => (
@@ -92,4 +182,4 @@ const Section = ({ title }) => (
 );
 const Separator = () => <View style={styles.separator} />;
 
-export { Product, Order, Separator, Section };
+export { Product, Order, OrderGrouped, TotalOrder, Separator, Section };

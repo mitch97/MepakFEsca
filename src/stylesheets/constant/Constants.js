@@ -12,5 +12,8 @@ const Constants = {
   NUMBER_PICKER_SELECTOR: '#b7bfc9',
   SEPARATOR_COLOR: '#b7bfc9',
   MODAL_BACKGROUND: '#00000080',
+  CARD_BACKGROUND_STATUS_VOID: '#a4e0b4',
+  CARD_BACKGROUND_STATUS_WORKING: '#a4b3e0',
+  CARD_BACKGROUND_STATUS_END: '#e0a4ac',
 };
 export default Constants;
