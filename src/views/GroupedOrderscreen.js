@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, FlatList } from 'react-native';
 import styles from '../stylesheets/views/GroupedOrder';
+import usePolling from '../hooks/usePolling';
 
 import Api, {
   BASE_URL,
@@ -13,17 +14,31 @@ import Api, {
 import { OrderGroupedRow, Separator, TotalOrderRow } from '../components';
 import { Status, StatusOrder } from '../utils/OrderStatus';
 
-const GroupedOrderscreen = ({ navigation }) => {
+import socketIOClient from 'socket.io-client';
+
+const GroupedOrderscreen = () => {
   const [groupedOrders, setGroupedOrders] = useState([]);
   const [orders, setOrders] = useState([]);
+  const [isPolling, startPolling, stopPolling] = usePolling({
+    interval: 5000,
+    onTick: () => downloadOrders(),
+  });
 
   useEffect(() => {
     downloadOrders();
   }, []);
 
+  useEffect(() => {
+    const socket = socketIOClient(BASE_URL);
+    socket.on('order', data => {
+      console.log(data);
+    });
+  }, []);
+
   const downloadOrders = async () => {
     const groupedOrdersFromServer = await Api.get(
-      `${BASE_URL}${API_PATH}${AGGREGATE_ORDERS_PATH}?type=drink`,
+      // `${BASE_URL}${API_PATH}${AGGREGATE_ORDERS_PATH}?type=drink`,
+      `${BASE_URL}${API_PATH}${AGGREGATE_ORDERS_PATH}`,
     );
     setGroupedOrders(
       groupedOrdersFromServer.sort(
@@ -36,7 +51,7 @@ const GroupedOrderscreen = ({ navigation }) => {
       `${BASE_URL}${API_PATH}${ORDERS_PATH({
         status:
           'aggregate,working,request_segue,delivery,aggregate_segue,working_segue,delivery_segue',
-        type: 'drink',
+        // type: 'drink',
       })}`,
     );
     setOrders(

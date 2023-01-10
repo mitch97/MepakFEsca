@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { View, ScrollView } from 'react-native';
 import { TabView, TabBar } from 'react-native-tab-view';
 import styles from '../stylesheets/views/Table';
+import usePolling from '../hooks/usePolling';
 import { TableCard, Label } from '../components';
 import { ucfirst } from '../utils/String';
 
@@ -30,13 +31,17 @@ const Scene = ({ tables, onSelect }) => (
 );
 
 const Tablescreen = ({ navigation }) => {
-  const { setTable, flush } = useContext(OrderContext);
+  const { setTable } = useContext(OrderContext);
   const { navigationConstant, setNavigationConstant } = useContext(
     NavigationContext,
   );
   const [tables, setTables] = useState();
   const [tabIndex, setTabIndex] = useState(0);
   const [tabs, setTabs] = useState();
+  const [isPolling, startPolling, stopPolling] = usePolling({
+    interval: 5000,
+    onTick: () => downloadTables(),
+  });
 
   useEffect(() => {
     switch (navigationConstant) {
@@ -50,11 +55,15 @@ const Tablescreen = ({ navigation }) => {
   }, [setNavigationConstant, navigationConstant]);
 
   useEffect(() => {
-    // flush();
     downloadTables();
   }, []);
 
+  // useEffect(() => {
+  //   if (!isPolling) startPolling();
+  // });
+
   const downloadTables = async () => {
+    console.log('--downloadTables--');
     const tablesFromServer = await Api.get(
       `${BASE_URL}${API_PATH}${TABLES_PATH}`,
     );
@@ -67,9 +76,8 @@ const Tablescreen = ({ navigation }) => {
     );
   };
 
-  // useEffect(() => flush());
-
   const onSelectTable = ({ code, order }) => {
+    // stopPolling();
     if (!order) {
       setTable(code);
       navigation.navigate('Category');

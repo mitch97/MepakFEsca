@@ -1,4 +1,4 @@
-export const BASE_URL = 'http://192.168.9.100:3333';
+export const BASE_URL = 'http://192.168.1.60:3333';
 export const API_PATH = '/api/v1';
 export const CONFIG_PATH = '/config';
 export const LOGIN_PATH = '/login';
