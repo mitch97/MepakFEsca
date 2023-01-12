@@ -1,0 +1,80 @@
+{
+  "root": true,
+  "extends": "@react-native-community",
+  "rules": {
+    "no-extend-native": "off",
+    "arrow-body-style": "off",
+    "arrow-spacing": "warn",
+    "strict": "off",
+    "curly": "off",
+    "import/namespace": "off",
+    "import/no-relative-parent-imports": "off",
+    "import/no-named-as-default": "off",
+    "import/no-unresolved": "off",
+    "import/prefer-default-export": "off",
+    "import/order": "off",
+    "template-curly-spacing": "off",
+    "indent": [
+      "error",
+      2,
+      {
+        "SwitchCase": 1
+      }
+    ],
+    "max-classes-per-file": "off",
+    "no-underscore-dangle": "off",
+    "consistent-return": "off",
+    "global-require": "off",
+    "no-new": "warn",
+    "no-nested-ternary": "warn",
+    "new-cap": "off",
+    "no-undef": "warn",
+    "valid-jsdoc": "error",
+    "no-unneeded-ternary": "warn",
+    "no-empty-pattern": "error",
+    "nonblock-statement-body-position": "off",
+    "no-param-reassign": "off",
+    "no-spaced-func": "warn",
+    "keyword-spacing": "warn",
+    "space-before-blocks": "warn",
+    "object-curly-spacing": [
+      "warn",
+      "always"
+    ],
+    "object-shorthand": "warn",
+    "no-var": "warn",
+    "no-else-return": "off",
+    "no-mixed-operators": "off",
+    "no-console": "error",
+    "no-confusing-arrow": "off",
+    "no-multiple-empty-lines": [
+      "warn",
+      {
+        "max": 1
+      }
+    ],
+    "no-unused-expressions": "off",
+    "max-len": [
+      "warn",
+      400,
+      2
+    ],
+    "padded-blocks": "off",
+    "prefer-const": "warn",
+    "radix": "warn",
+    "space-before-function-paren": [
+      "warn",
+      {
+        "anonymous": "always",
+        "named": "ignore",
+        "asyncArrow": "ignore"
+      }
+    ],
+    "no-multi-assign": "warn",
+    "no-restricted-globals": "warn",
+    "prefer-promise-reject-errors": "warn",
+    "linebreak-style": 0,
+    "arrow-parens": 0,
+    "camelcase": "warn"
+  }
+}

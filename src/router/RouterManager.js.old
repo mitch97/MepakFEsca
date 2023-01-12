@@ -1,0 +1,215 @@
+import React, { useContext } from 'react';
+import { View, StyleSheet, Pressable, Platform } from 'react-native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { Constants, Fonts } from '../stylesheets/constant';
+
+import { Status } from '../utils/OrderStatus';
+
+import AuthContext from '../context/AuthContext';
+import OrderContext from '../context/OrderContext';
+
+import { Icon, Label } from '../components';
+
+import Signscreen from '../views/Signscreen';
+import Tablescreen from '../views/Tablescreen';
+import Categoryscreen from '../views/Categoryscreen';
+import Productscreen from '../views/Productscreen';
+import Notescreen from '../views/Notescreen';
+import OrderDetailscreen from '../views/OrderDetailscreen';
+import GroupedOrderscreen from '../views/GroupedOrderscreen';
+
+const transparentHeaderStyles = StyleSheet.create({
+  backPressableDefault: {
+    opacity: 1,
+  },
+  backPressablePressed: {
+    opacity: 0.7,
+  },
+  wrapper: {
+    height: '100%',
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingLeft: 10,
+    paddingRight: 30,
+  },
+  title: {
+    ...Fonts.FONT_SEMIBOLD,
+    fontSize: 20,
+  },
+});
+
+const withoutHeader = { headerShown: false };
+const transparentHeader = ({ order, flush, table } = {}) => ({
+  route: { name },
+  navigation,
+}) => {
+  const onBackAndFlush = () => {
+    flush && flush();
+    navigation.goBack();
+  };
+  const onEditOrder = () => navigation.navigate('Category');
+  const onConfirmOrder = () => navigation.push('OrderDetail');
+
+  let headerTitle = '';
+  if (table) {
+    headerTitle = () => (
+      <Label style={transparentHeaderStyles.title}>{`Tavolo #${table}`}</Label>
+    );
+  }
+
+  return {
+    headerTitle,
+    headerLeft: ({ canGoBack }) =>
+      canGoBack && (
+        <Pressable
+          onPress={onBackAndFlush}
+          style={({ pressed }) => ({
+            ...(pressed
+              ? transparentHeaderStyles.backPressablePressed
+              : transparentHeaderStyles.backPressableDefault),
+          })}>
+          <View style={transparentHeaderStyles.wrapper}>
+            <Icon
+              name="back"
+              size={Constants.ICON_SIZE_MEDIUM}
+              color={Constants.INPUT_PLACEHOLDER_COLOR}
+            />
+          </View>
+        </Pressable>
+      ),
+    headerRight: () => {
+      const { info } = order;
+      if (info) {
+        const { status } = info;
+        return (
+          <>
+            {name === 'Product' && (
+              <Pressable
+                onPress={onConfirmOrder}
+                style={({ pressed }) => ({
+                  ...(pressed
+                    ? transparentHeaderStyles.backPressablePressed
+                    : transparentHeaderStyles.backPressableDefault),
+                })}>
+                <View style={transparentHeaderStyles.wrapper}>
+                  <Icon
+                    name="order"
+                    size={Constants.ICON_SIZE_MEDIUM}
+                    color={Constants.INPUT_PLACEHOLDER_COLOR}
+                  />
+                </View>
+              </Pressable>
+            )}
+            {name === 'OrderDetail' && status === Status.VOID && (
+              <Pressable
+                onPress={onEditOrder}
+                style={({ pressed }) => ({
+                  ...(pressed
+                    ? transparentHeaderStyles.backPressablePressed
+                    : transparentHeaderStyles.backPressableDefault),
+                })}>
+                <View style={transparentHeaderStyles.wrapper}>
+                  <Icon
+                    name="edit"
+                    size={Constants.ICON_SIZE_MEDIUM}
+                    color={Constants.INPUT_PLACEHOLDER_COLOR}
+                  />
+                </View>
+              </Pressable>
+            )}
+          </>
+        );
+      }
+      return (
+        <>
+          {order && Object.keys(order).length > 0 && name !== 'OrderDetail' && (
+            <Pressable
+              onPress={onConfirmOrder}
+              style={({ pressed }) => ({
+                ...(pressed
+                  ? transparentHeaderStyles.backPressablePressed
+                  : transparentHeaderStyles.backPressableDefault),
+              })}>
+              <View style={transparentHeaderStyles.wrapper}>
+                <Icon
+                  name="order"
+                  size={Constants.ICON_SIZE_MEDIUM}
+                  color={Constants.INPUT_PLACEHOLDER_COLOR}
+                />
+              </View>
+            </Pressable>
+          )}
+          {name === 'OrderDetail' && (
+            <Pressable
+              onPress={onEditOrder}
+              style={({ pressed }) => ({
+                ...(pressed
+                  ? transparentHeaderStyles.backPressablePressed
+                  : transparentHeaderStyles.backPressableDefault),
+              })}>
+              <View style={transparentHeaderStyles.wrapper}>
+                <Icon
+                  name="edit"
+                  size={Constants.ICON_SIZE_MEDIUM}
+                  color={Constants.INPUT_PLACEHOLDER_COLOR}
+                />
+              </View>
+            </Pressable>
+          )}
+        </>
+      );
+    },
+  };
+};
+
+const Stack = createStackNavigator();
+const RouterManager = () => {
+  const { userToken } = useContext(AuthContext);
+  const { order, flush, table } = useContext(OrderContext);
+
+  return (
+    <Stack.Navigator>
+      {!userToken && (
+        <Stack.Screen
+          name="Sign"
+          component={Signscreen}
+          options={withoutHeader}
+        />
+      )}
+      {Platform.isPad && (
+        <Stack.Screen
+          name="GroupedOrder"
+          component={GroupedOrderscreen}
+          options={transparentHeader({ order })}
+        />
+      )}
+      <Stack.Screen
+        name="Table"
+        component={Tablescreen}
+        options={transparentHeader({ order })}
+      />
+      <Stack.Screen
+        name="Category"
+        component={Categoryscreen}
+        options={transparentHeader({ order, table })}
+      />
+      <Stack.Screen
+        name="Product"
+        component={Productscreen}
+        options={transparentHeader({ order })}
+      />
+      <Stack.Screen
+        name="Note"
+        component={Notescreen}
+        options={transparentHeader()}
+      />
+      <Stack.Screen
+        name="OrderDetail"
+        component={OrderDetailscreen}
+        options={transparentHeader({ order, flush })}
+      />
+    </Stack.Navigator>
+  );
+};
+export default RouterManager;
