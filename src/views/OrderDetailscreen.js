@@ -22,9 +22,9 @@ const EditModal = ({
   order,
   visible,
   onClose,
-  onChangeQuantity = () => {},
-  onAddNote = () => {},
-  onSegue = () => {},
+  onChangeQuantity = () => { },
+  onAddNote = () => { },
+  onSegue = () => { },
 }) => (
   <Modal animationType="fade" transparent={true} visible={visible}>
     <View style={styles.modalContainer}>
@@ -57,12 +57,10 @@ const OrderDetailscreen = ({
   navigation,
   route: { params: { order: orderId } = {} },
 }) => {
-  const { order, removeProductToOrder, setOrder, table, flush } = useContext(
-    OrderContext,
-  );
-  const { navigationConstant, setNavigationConstant } = useContext(
-    NavigationContext,
-  );
+  const { order, removeProductToOrder, setOrder, table, flush } =
+    useContext(OrderContext);
+  const { navigationConstant, setNavigationConstant } =
+    useContext(NavigationContext);
   const [sectionOrder, setSectionOrder] = useState();
   const [modalVisibile, setModalVisible] = useState(false);
   const [selectedOrder, setSelectedOrder] = useState();
@@ -286,7 +284,7 @@ const OrderDetailscreen = ({
           navigation.popToTop();
         }
       }
-    } catch (e) {}
+    } catch (e) { }
   };
 
   const changeStatusOrder = async () => {
@@ -294,6 +292,7 @@ const OrderDetailscreen = ({
       `${BASE_URL}${API_PATH}${ORDER_STATUS_PATH(orderFromServer._id)}`,
     );
     if (response && response._id) {
+      setOrder({});
       setNavigationConstant(Constants.RETURN_TO_HOME);
       navigation.popToTop();
     }

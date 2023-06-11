@@ -32,9 +32,8 @@ const Scene = ({ tables, onSelect }) => (
 
 const Tablescreen = ({ navigation }) => {
   const { setTable } = useContext(OrderContext);
-  const { navigationConstant, setNavigationConstant } = useContext(
-    NavigationContext,
-  );
+  const { navigationConstant, setNavigationConstant } =
+    useContext(NavigationContext);
   const [tables, setTables] = useState();
   const [tabIndex, setTabIndex] = useState(0);
   const [tabs, setTabs] = useState();

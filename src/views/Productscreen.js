@@ -13,15 +13,10 @@ const Productscreen = ({
     params: { category },
   },
 }) => {
-  const {
-    order,
-    addProductToOrder,
-    removeProductToOrder,
-    setOrder,
-  } = useContext(OrderContext);
-  const { navigationConstant, setNavigationConstant } = useContext(
-    NavigationContext,
-  );
+  const { order, addProductToOrder, removeProductToOrder, setOrder } =
+    useContext(OrderContext);
+  const { navigationConstant, setNavigationConstant } =
+    useContext(NavigationContext);
   const [products, setProducts] = useState([]);
 
   // useEffect(() => {
