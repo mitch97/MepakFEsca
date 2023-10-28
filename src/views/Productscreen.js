@@ -5,7 +5,8 @@ import { ProductRow, Separator } from '../components';
 import OrderContext from '../context/OrderContext';
 import NavigationContext, { Constants } from '../context/NavigationContext';
 
-import Api, { BASE_URL, API_PATH, PRODUCTS_BY_CATEGORY_PATH } from '../api';
+import Api, { API_PATH, PRODUCTS_BY_CATEGORY_PATH } from '../api';
+import AuthContext from '../context/AuthContext';
 
 const Productscreen = ({
   navigation,
@@ -13,10 +14,13 @@ const Productscreen = ({
     params: { category },
   },
 }) => {
-  const { order, addProductToOrder, removeProductToOrder, setOrder } =
-    useContext(OrderContext);
-  const { navigationConstant, setNavigationConstant } =
-    useContext(NavigationContext);
+  const {
+    order,
+    addProductToOrder,
+    removeProductToOrder,
+    setOrder,
+  } = useContext(OrderContext);
+  const { userToken } = useContext(AuthContext);
   const [products, setProducts] = useState([]);
 
   // useEffect(() => {
@@ -33,7 +37,7 @@ const Productscreen = ({
   useEffect(() => {
     const effect = async () => {
       const productsFromServer = await Api.get(
-        `${BASE_URL}${API_PATH}${PRODUCTS_BY_CATEGORY_PATH(category)}`,
+        `${userToken}${API_PATH}${PRODUCTS_BY_CATEGORY_PATH(category)}`,
       );
       setProducts(productsFromServer);
     };

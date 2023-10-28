@@ -6,10 +6,11 @@ import usePolling from '../hooks/usePolling';
 import { TableCard, Label } from '../components';
 import { ucfirst } from '../utils/String';
 
-import Api, { BASE_URL, API_PATH, TABLES_PATH } from '../api';
+import Api, { userToken, API_PATH, TABLES_PATH } from '../api';
 
 import OrderContext from '../context/OrderContext';
 import NavigationContext, { Constants } from '../context/NavigationContext';
+import AuthContext from '../context/AuthContext';
 
 const Scene = ({ tables, onSelect }) => (
   <ScrollView
@@ -32,8 +33,10 @@ const Scene = ({ tables, onSelect }) => (
 
 const Tablescreen = ({ navigation }) => {
   const { setTable } = useContext(OrderContext);
-  const { navigationConstant, setNavigationConstant } =
-    useContext(NavigationContext);
+  const { navigationConstant, setNavigationConstant } = useContext(
+    NavigationContext,
+  );
+  const { userToken } = useContext(AuthContext);
   const [tables, setTables] = useState();
   const [tabIndex, setTabIndex] = useState(0);
   const [tabs, setTabs] = useState();
@@ -64,7 +67,7 @@ const Tablescreen = ({ navigation }) => {
   const downloadTables = async () => {
     console.log('--downloadTables--');
     const tablesFromServer = await Api.get(
-      `${BASE_URL}${API_PATH}${TABLES_PATH}`,
+      `${userToken}${API_PATH}${TABLES_PATH}`,
     );
     setTables(tablesFromServer);
     setTabs(

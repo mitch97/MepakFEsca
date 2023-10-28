@@ -1,22 +1,30 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { View, FlatList } from 'react-native';
 import styles from '../stylesheets/views/GroupedOrder';
 import usePolling from '../hooks/usePolling';
 
 import Api, {
-  BASE_URL,
   API_PATH,
   AGGREGATE_ORDERS_PATH,
   ORDERS_PATH,
   AGGREGATE_ORDER_PATH,
+  BATCH_ORDER_PATH,
 } from '../api';
 
-import { OrderGroupedRow, Separator, TotalOrderRow } from '../components';
+import {
+  Button,
+  OrderGroupedRow,
+  Separator,
+  TotalOrderRow,
+} from '../components';
 import { Status, StatusOrder } from '../utils/OrderStatus';
 
 import socketIOClient from 'socket.io-client';
+import AuthContext from '../context/AuthContext';
 
 const GroupedOrderscreen = () => {
+  const { userToken } = useContext(AuthContext);
+
   const [groupedOrders, setGroupedOrders] = useState([]);
   const [orders, setOrders] = useState([]);
   const [isPolling, startPolling, stopPolling] = usePolling({
@@ -29,7 +37,7 @@ const GroupedOrderscreen = () => {
   }, []);
 
   useEffect(() => {
-    const socket = socketIOClient(BASE_URL);
+    const socket = socketIOClient(userToken);
     socket.on('order', data => {
       console.log(data);
     });
@@ -37,8 +45,8 @@ const GroupedOrderscreen = () => {
 
   const downloadOrders = async () => {
     const groupedOrdersFromServer = await Api.get(
-      // `${BASE_URL}${API_PATH}${AGGREGATE_ORDERS_PATH}?type=drink`,
-      `${BASE_URL}${API_PATH}${AGGREGATE_ORDERS_PATH}`,
+      // `${userToken}${API_PATH}${AGGREGATE_ORDERS_PATH}?type=drink`,
+      `${userToken}${API_PATH}${AGGREGATE_ORDERS_PATH}`,
     );
     setGroupedOrders(
       groupedOrdersFromServer.sort(
@@ -48,7 +56,7 @@ const GroupedOrderscreen = () => {
     );
 
     const ordersFromServer = await Api.get(
-      `${BASE_URL}${API_PATH}${ORDERS_PATH({
+      `${userToken}${API_PATH}${ORDERS_PATH({
         status:
           'aggregate,working,request_segue,delivery,aggregate_segue,working_segue,delivery_segue',
         // type: 'drink',
@@ -64,7 +72,7 @@ const GroupedOrderscreen = () => {
 
   const onChangeStatus = async ({ _id }) => {
     const orderFromServer = await Api.put(
-      `${BASE_URL}${API_PATH}${AGGREGATE_ORDER_PATH(_id)}`,
+      `${userToken}${API_PATH}${AGGREGATE_ORDER_PATH(_id)}`,
     );
     if (orderFromServer && orderFromServer._id) downloadOrders();
   };
@@ -112,25 +120,33 @@ const GroupedOrderscreen = () => {
   };
   const keyExtractor = item => item._id;
 
+  const onAggregate = async () =>
+    Api.get(`${userToken}${API_PATH}${BATCH_ORDER_PATH()}`);
+
   return (
-    <View style={styles.wrapper}>
-      <View style={styles.groupedOrderColumns}>
-        <FlatList
-          data={groupedOrders}
-          renderItem={renderGroupedOrderItem}
-          keyExtractor={keyExtractor}
-          ItemSeparatorComponent={Separator}
-        />
+    <>
+      <View style={styles.buttonWrapper}>
+        <Button onClick={onAggregate} value="Ricevi ordini" />
       </View>
-      <View style={styles.detailOrderColumns}>
-        <FlatList
-          data={orders}
-          renderItem={renderOrderItem}
-          keyExtractor={keyExtractor}
-          ItemSeparatorComponent={Separator}
-        />
+      <View style={styles.wrapper}>
+        <View style={styles.groupedOrderColumns}>
+          <FlatList
+            data={groupedOrders}
+            renderItem={renderGroupedOrderItem}
+            keyExtractor={keyExtractor}
+            ItemSeparatorComponent={Separator}
+          />
+        </View>
+        <View style={styles.detailOrderColumns}>
+          <FlatList
+            data={orders}
+            renderItem={renderOrderItem}
+            keyExtractor={keyExtractor}
+            ItemSeparatorComponent={Separator}
+          />
+        </View>
       </View>
-    </View>
+    </>
   );
 };
 export default GroupedOrderscreen;

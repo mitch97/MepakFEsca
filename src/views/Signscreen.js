@@ -1,6 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { View } from 'react-native';
-import useAuth from '../hooks/useAuth';
+import { Platform, View } from 'react-native';
 import styles from '../stylesheets/views/Sign';
 
 import { Input, Button } from '../components';
@@ -8,19 +7,14 @@ import { Input, Button } from '../components';
 import AuthContext from '../context/AuthContext';
 
 const Signscreen = ({ navigation }) => {
-  const { signIn } = useAuth();
   const { setUserToken } = useContext(AuthContext);
   const [username, setUsername] = useState();
-  const [password, setPassword] = useState();
 
   const onChangeUsername = value => setUsername(value);
-  const onChangePassword = value => setPassword(value);
+
   const onSubmit = async () => {
-    const { response, token } = await signIn({ username, password });
-    if (response) {
-      setUserToken(token);
-      navigation.navigate('Category');
-    }
+    setUserToken(`http://${username}:3333`);
+    navigation.navigate(Platform.isPad ? 'GroupedOrder' : 'Table');
   };
 
   return (
@@ -30,19 +24,12 @@ const Signscreen = ({ navigation }) => {
           <Input
             icon="user"
             style={styles.username}
-            placeholder="Inserisci la username"
-            type="email-address"
+            placeholder="Inserisci l'indirizzo IP del server"
             onChange={onChangeUsername}
-          />
-          <Input
-            icon="password"
-            placeholder="Inserisci la password"
-            type="password"
-            onChange={onChangePassword}
           />
         </View>
         <View style={styles.submitWrapper}>
-          <Button style={styles.submit} onClick={onSubmit} />
+          <Button onClick={onSubmit} value="Conferma" />
         </View>
       </View>
     </View>

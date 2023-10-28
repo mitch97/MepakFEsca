@@ -1,13 +1,8 @@
 import 'react-native-gesture-handler';
 import React, { useEffect, useState } from 'react';
 import { Platform, StatusBar } from 'react-native';
-import useAuth from './src/hooks/useAuth';
 
-import styles from './src/stylesheets/App';
 import theme from './src/stylesheets/theme';
-
-import Api, { BASE_URL, CONFIG_PATH } from './src/api';
-
 import Store from './src/store';
 
 import SplashScreenManager from 'react-native-splash-screen';

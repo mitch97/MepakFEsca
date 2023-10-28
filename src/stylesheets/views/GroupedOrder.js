@@ -7,6 +7,9 @@ export default StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
   },
+  buttonWrapper: {
+    padding: 20,
+  },
   groupedOrderColumns: {
     width: '50%',
     height: '100%',

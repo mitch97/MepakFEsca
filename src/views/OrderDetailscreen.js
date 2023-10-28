@@ -13,18 +13,19 @@ import styles from '../stylesheets/views/OrderDetail';
 import { Fonts } from '../stylesheets/constant';
 import { Status } from '../utils/OrderStatus';
 
-import Api, { BASE_URL, API_PATH, ORDER_PATH, ORDER_STATUS_PATH } from '../api';
+import Api, { API_PATH, ORDER_PATH, ORDER_STATUS_PATH } from '../api';
 
 import OrderContext from '../context/OrderContext';
 import NavigationContext, { Constants } from '../context/NavigationContext';
+import AuthContext from '../context/AuthContext';
 
 const EditModal = ({
   order,
   visible,
   onClose,
-  onChangeQuantity = () => { },
-  onAddNote = () => { },
-  onSegue = () => { },
+  onChangeQuantity = () => {},
+  onAddNote = () => {},
+  onSegue = () => {},
 }) => (
   <Modal animationType="fade" transparent={true} visible={visible}>
     <View style={styles.modalContainer}>
@@ -57,10 +58,13 @@ const OrderDetailscreen = ({
   navigation,
   route: { params: { order: orderId } = {} },
 }) => {
-  const { order, removeProductToOrder, setOrder, table, flush } =
-    useContext(OrderContext);
-  const { navigationConstant, setNavigationConstant } =
-    useContext(NavigationContext);
+  const { order, removeProductToOrder, setOrder, table, flush } = useContext(
+    OrderContext,
+  );
+  const { navigationConstant, setNavigationConstant } = useContext(
+    NavigationContext,
+  );
+  const { userToken } = useContext(AuthContext);
   const [sectionOrder, setSectionOrder] = useState();
   const [modalVisibile, setModalVisible] = useState(false);
   const [selectedOrder, setSelectedOrder] = useState();
@@ -99,7 +103,7 @@ const OrderDetailscreen = ({
     if (orderId) {
       const effect = async () => {
         const _orderFromServer = await Api.get(
-          `${BASE_URL}${API_PATH}${ORDER_PATH(orderId)}`,
+          `${userToken}${API_PATH}${ORDER_PATH(orderId)}`,
         );
 
         const { food, drink } = _orderFromServer;
@@ -263,7 +267,7 @@ const OrderDetailscreen = ({
     try {
       if (info) {
         const responseUpdateOrder = await Api.put(
-          `${BASE_URL}${API_PATH}${ORDER_PATH(info._id)}`,
+          `${userToken}${API_PATH}${ORDER_PATH(info._id)}`,
           { ...body, table: info.table },
         );
 
@@ -274,7 +278,7 @@ const OrderDetailscreen = ({
         }
       } else {
         const responseAddOrder = await Api.post(
-          `${BASE_URL}${API_PATH}${ORDER_PATH()}`,
+          `${userToken}${API_PATH}${ORDER_PATH()}`,
           body,
         );
 
@@ -284,12 +288,12 @@ const OrderDetailscreen = ({
           navigation.popToTop();
         }
       }
-    } catch (e) { }
+    } catch (e) {}
   };
 
   const changeStatusOrder = async () => {
     const response = await Api.put(
-      `${BASE_URL}${API_PATH}${ORDER_STATUS_PATH(orderFromServer._id)}`,
+      `${userToken}${API_PATH}${ORDER_STATUS_PATH(orderFromServer._id)}`,
     );
     if (response && response._id) {
       setOrder({});

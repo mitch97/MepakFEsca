@@ -3,14 +3,13 @@ import { View, ScrollView } from 'react-native';
 import styles from '../stylesheets/views/Category';
 import { ProductCard } from '../components';
 
-import Api, { BASE_URL, API_PATH, CATEGORIES_PATH } from '../api';
+import Api, { API_PATH, CATEGORIES_PATH } from '../api';
 
 import NavigationContext, { Constants } from '../context/NavigationContext';
+import AuthContext from '../context/AuthContext';
 
 const Categoryscreen = ({ navigation }) => {
-  const { navigationConstant, setNavigationConstant } = useContext(
-    NavigationContext,
-  );
+  const { userToken } = useContext(AuthContext);
   const [categories, setCategories] = useState([]);
 
   // useEffect(() => {
@@ -27,7 +26,7 @@ const Categoryscreen = ({ navigation }) => {
   useEffect(() => {
     const effect = async () => {
       const categoriesFromServer = await Api.get(
-        `${BASE_URL}${API_PATH}${CATEGORIES_PATH}`,
+        `${userToken}${API_PATH}${CATEGORIES_PATH}`,
       );
       setCategories(categoriesFromServer);
     };

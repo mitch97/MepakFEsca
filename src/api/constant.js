@@ -1,4 +1,4 @@
-export const BASE_URL = 'http://192.168.1.53:3333';
+// export const BASE_URL = 'http://192.168.1.53:3333';
 export const API_PATH = '/api/v1';
 export const CONFIG_PATH = '/config';
 export const LOGIN_PATH = '/login';
@@ -6,6 +6,7 @@ export const LOGOUT_PATH = '/logout';
 export const CATEGORIES_PATH = '/categories';
 export const TABLES_PATH = '/tables';
 export const AGGREGATE_ORDERS_PATH = '/aggregates/orders';
+export const BATCH_ORDER_PATH = () => '/batch/order';
 export const AGGREGATE_ORDER_PATH = (order = undefined) =>
   `/aggregates/order${order ? `/${order}` : ''}`;
 export const PRODUCTS_BY_CATEGORY_PATH = category =>
